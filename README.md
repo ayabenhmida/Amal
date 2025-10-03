@@ -1,6 +1,6 @@
 # DeepSeek Architecture
 
-## Team
+## Team 3IDL03
 - **Eya Ben Hmida**
 - **Eya Belkadhie**
 - **Rihab Ben Amor Souissi**

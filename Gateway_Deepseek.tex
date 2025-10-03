@@ -1,0 +1,90 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\geometry{a4paper, margin=2cm}
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows, positioning, fit, backgrounds, calc}
+\usepackage{float}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    component/.style={rectangle, draw, fill=blue!20, text width=3cm, minimum height=1cm, align=center},
+    layer/.style={rectangle, draw, dashed, fill=gray!10, text width=14cm, minimum height=2.5cm},
+    arrow/.style={->, >=stealth, thick}
+]
+
+% Couche Clients
+\node[layer] (clients) at (0,0) {};
+\node[above right] at (clients.north west) {\textbf{Couche Clients}};
+\node[component] (web) at (-4, 0) {Web\\Client};
+\node[component] (mobile) at (-1.5, 0) {Mobile\\Client};
+\node[component] (backend) at (1, 0) {Backend\\Service};
+\node[component] (sdk) at (3.5, 0) {SDK\\OpenAI};
+
+% Couche Edge & Gateway
+\node[layer] (edge) at (0,-3.5) {};
+\node[above right] at (edge.north west) {\textbf{Edge \& Gateway}};
+\node[component] (aigateway) at (-2.5, -3.5) {AI Gateway\\(Cloudflare)};
+\node[component] (apigateway) at (2, -3.5) {API Gateway\\(APISIX)};
+
+% Couche Orchestration
+\node[layer] (orchestration) at (0,-7) {};
+\node[above right] at (orchestration.north west) {\textbf{Orchestration IA}};
+\node[component] (router) at (-4.5, -7) {Router\\Modèles};
+\node[component] (safety) at (-2, -7) {Safety\\Layer};
+\node[component] (policies) at (0.5, -7) {Policy\\Engine};
+\node[component] (filters) at (3, -7) {Prompt\\Filters};
+
+% Couche Données & Méta
+\node[layer] (data) at (0,-10.5) {};
+\node[above right] at (data.north west) {\textbf{Données \& Méta}};
+\node[component] (flags) at (-5, -10.5) {Feature\\Flags};
+\node[component] (secrets) at (-3, -10.5) {KMS\\Vault};
+\node[component] (logs) at (-1, -10.5) {Logs\\Métriques};
+\node[component] (cache) at (1, -10.5) {Cache\\Layer};
+\node[component] (rag) at (3.5, -10.5) {RAG\\Store};
+
+% Couche Backends IA
+\node[layer] (backends) at (0,-14) {};
+\node[above right] at (backends.north west) {\textbf{Backends IA}};
+\node[component, fill=green!20] (deepseek) at (-3, -14) {DeepSeek\\API};
+\node[component] (openai) at (0, -14) {OpenAI\\Fallback};
+\node[component] (anthropic) at (3, -14) {Anthropic\\Fallback};
+
+% Couche Infrastructure
+\node[layer] (infra) at (0,-17) {};
+\node[above right] at (infra.north west) {\textbf{Infrastructure}};
+\node[component] (k8s) at (-3.5, -17) {Kubernetes\\HPA};
+\node[component] (obs) at (-0.5, -17) {Observabilité\\OTel};
+\node[component] (cd) at (2.5, -17) {CI/CD\\Canary};
+
+% Flèches
+\draw[arrow] (web) -- (aigateway);
+\draw[arrow] (mobile) -- (aigateway);
+\draw[arrow] (backend) -- (apigateway);
+\draw[arrow] (sdk) -- (apigateway);
+
+\draw[arrow] (aigateway) -- (router);
+\draw[arrow] (apigateway) -- (router);
+
+\draw[arrow] (router) -- (safety);
+\draw[arrow] (safety) -- (policies);
+\draw[arrow] (policies) -- (filters);
+
+\draw[arrow] (filters) -- (deepseek);
+\draw[arrow] (policies) -- (openai);
+\draw[arrow] (policies) -- (anthropic);
+
+\draw[arrow] (secrets) -- (router);
+\draw[arrow] (cache) -- (filters);
+\draw[arrow] (logs) -- (obs);
+
+\end{tikzpicture}
+\caption{Vue d'ensemble des composants}
+\end{figure}
+
+
+\end{document}

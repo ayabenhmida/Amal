@@ -5,7 +5,7 @@
 - **Eya Belkadhie**
 - **Rihab Ben Amor Souissi**
 
-# **Architecture Summary**
+# **Parallel Microservices Architecture Summary**
 
 This system is a **parallel, event-driven microservices pipeline**.  
 Requests enter through an **API Gateway** *(Auth, rate-limit, circuit-break, retry, logging)*.  

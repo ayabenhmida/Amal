@@ -131,7 +131,7 @@ A **Query Service** and a **BFF** expose optimized read APIs.
 
 ## **Resources**
 
-- **Source Code:** [📂 View on GitHub](https://github.com/EyaGIT/Amal_2/blob/main/Microservice_parallele.tex)  
+- **Source Code:** [View on GitHub](https://github.com/EyaGIT/Amal_2/blob/main/Microservice_parallele.tex)  
 - **Architecture Diagram (PDF):** [Download PDF](https://github.com/EyaGIT/Amal_2/blob/main/Microservice_parallele.pdf)
 
 ---

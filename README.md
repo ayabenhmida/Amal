@@ -5,71 +5,71 @@
 - **Eya Belkadhie**
 - **Rihab Ben Amor Souissi**
 
-## Description
-DeepSeek is a modular and scalable platform combining a **microservices architecture** with an **intelligent gateway** for managing and orchestrating AI models. The project consists of two main components:
+# **Architecture Summary**
 
-1. **DeepSeek Gateway**: Handles authentication, data validation, enrichment, and routing requests to backend services.
-2. **DeepSeek Microservices**: Provides AI services, orchestration, ingestion, notification, and data storage for parallel processing and scalability.
-
----
-
-## 1. Gateway Architecture
-
-This architecture manages clients and orchestrates downstream services via an **API Gateway** and authentication services.
-
-### Key Components
-- **Clients / Frontend / API Consumers**
-- **API Gateway**: Authentication, rate-limiting
-- **Auth Service**: OAuth2 / Keycloak
-- **Ingestion Service**: Data validation and enrichment
-- **Message Broker**: Kafka / RabbitMQ for parallel processing
-- **Workers Cluster**: Pre-processing, ML inference, enrichment
-- **Orchestrator / Workflow**: Temporal / Argo
-- **Storages**: PostgreSQL, MongoDB, S3 / MinIO
-- **Notification Service**: Email, webhook, SMS
-- **Observability**: Prometheus, Grafana, Jaeger
-- **CI/CD & Infrastructure**: Kubernetes, GitHub Actions / GitLab CI
-
-> This architecture is optimized for scalability and parallel processing of AI requests.
+This system is a **parallel, event-driven microservices pipeline**.  
+Requests enter through an **API Gateway** *(Auth, rate-limit, circuit-break, retry, logging)*.  
+A **service mesh** secures and routes traffic to **core services** *(Ingestion, Validation, Enrichment, Transform)*.  
+Services publish domain events to **Kafka/Pulsar**.  
+**Worker pools** *(Preprocess, GPU Inference, Post-Process, Batch)* consume in **parallel** using consumer groups and scale **horizontally** based on queue depth.  
+Results are persisted to **PostgreSQL**, **MongoDB**, **Redis**, **Search**, and **S3**.  
+A **Query Service** and a **BFF** expose optimized read APIs.  
+**Prometheus/Grafana/Jaeger/ELK** provide observability.  
+**Kubernetes/Helm/ArgoCD** manage deployment and scaling.
 
 ---
 
-## 2. Microservices Architecture
+##  **When to Use**
 
-This architecture represents the full set of DeepSeek services and layers, including AI orchestration and backend services.
-
-### Client Layer
-- Web Client
-- Mobile Client
-- Backend Service
-- OpenAI SDK
-
-### Edge & Gateway Layer
-- AI Gateway (Cloudflare)
-- API Gateway (APISIX)
-
-### AI Orchestration Layer
-- Model Router
-- Safety Layer
-- Policy Engine
-- Prompt Filters
-
-### Data & Metadata Layer
-- Feature Flags
-- KMS / Vault
-- Logs / Metrics
-- Cache Layer
-- RAG Store
-
-### AI Backend Layer
-- DeepSeek API
-- OpenAI Fallback
-- Anthropic Fallback
-
-### Infrastructure Layer
-- Kubernetes HPA
-- Observability (OTel)
-- CI/CD with Canary Deployments
-
+- High-throughput pipelines  
+- ML inference workloads  
+- Spiky traffic or bursty workloads  
+- Multi-team ownership with clear service boundaries  
+- Systems requiring strong resilience and auto-scaling  
 
 ---
+
+## **When Not to Use**
+
+- Small or simple CRUD applications  
+- Ultra-low-latency synchronous flows  
+- Systems needing strict cross-service ACID transactions  
+
+---
+
+## **Pros**
+
+- Elastic horizontal scaling  
+- High resilience through asynchronous queues  
+- High throughput from parallelism  
+- Clear service ownership and boundaries  
+
+---
+
+##  **Cons**
+
+- High operational complexity and cost  
+- Eventual consistency across services  
+- Schema/version management required  
+- More complex debugging and tracing  
+
+---
+
+##  **Recommended Practices**
+
+- Keep **CORS**, **compression**, and **validation** at the **Gateway**;  
+  use the **Service Mesh** for **mTLS** and **traffic policies**.  
+- Prefer **one orchestrator** *(Temporal or Airflow)* — avoid overlapping Celery unless required.  
+- Use **Schema Registry**, **Dead-Letter Queues (DLQs)**, and **idempotency keys** for safe retries.  
+- Centralize database writes through dedicated **Writer/Indexer services**, not directly from workers.  
+- Scale consumer groups via **Horizontal Pod Autoscaler (HPA)** on **Kafka topic lag**;  
+  use **partition keys** for ordered per-entity processing.  
+
+---
+
+## **Resources**
+
+- **Source Code:** [📂 View on GitHub](https://github.com/EyaGIT/Amal_2/blob/main/Microservice_parallele.tex)  
+- **Architecture Diagram (PDF):** [Download PDF](https://github.com/EyaGIT/Amal_2/blob/main/Microservice_parallele.pdf)  
+ 
+*Last Updated: October 2025*

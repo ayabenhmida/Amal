@@ -5,7 +5,7 @@
 - **Eya Belkadhie**
 - **Rihab Ben Amor Souissi**
 
-  # **DeepSeek Gateway Architecture**
+# **DeepSeek Gateway Architecture**
 
 This architecture represents a **layered, policy-driven AI gateway system** that coordinates communication between client applications and multiple AI model providers (DeepSeek, OpenAI, Anthropic).  
 Its goal is to **orchestrate, secure, and optimize** AI requests using routing intelligence, safety filters, and infrastructure automation.

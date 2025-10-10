@@ -1,0 +1,118 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, shapes, calc}
+\usepackage{adjustbox}
+\usepackage{geometry}
+\geometry{margin=1.5cm}
+
+\pagestyle{empty}
+\begin{document}
+
+\begin{center}
+  \Large \textbf{Architecture microservices UML de DeepSeek}
+\end{center}
+\vspace{0.5cm}
+
+\begin{adjustbox}{max width=\textwidth, center}
+\begin{tikzpicture}[
+    component/.style={rectangle, draw=black, rounded corners, minimum width=2.2cm, minimum height=0.6cm, align=center, font=\tiny, fill=blue!5},
+    infra/.style={rectangle, draw=black, minimum width=2.2cm, minimum height=0.6cm, align=center, font=\tiny, fill=gray!10},
+    actor/.style={ellipse, draw=black, minimum width=1.8cm, minimum height=0.6cm, align=center, font=\tiny, fill=green!10},
+    support/.style={rectangle, draw=black, dashed, minimum width=2.2cm, minimum height=0.6cm, align=center, font=\tiny, fill=yellow!15},
+    arrow/.style={-Latex, thick, line width=0.4pt}
+]
+
+% ==== ACTORS ====
+\node[actor] (web) {Client Web};
+\node[actor, right=1.0cm of web] (mobile) {Client Mobile};
+\node[actor, right=1.0cm of mobile] (api) {Intégrations};
+
+% ==== API GATEWAY ====
+\node[component, below=1.2cm of mobile] (gateway) {API Gateway};
+\node[component, left=1.0cm of gateway] (auth) {Service Auth};
+
+% ==== CORE SERVICES ====
+\node[component, below=1.2cm of gateway] (search) {Service Recherche};
+\node[component, left=1.2cm of search] (user) {Service Utilisateurs};
+\node[component, right=1.2cm of search] (indexer) {Service Indexation};
+\node[component, below=1.0cm of indexer] (crawler) {Service Collecte};
+\node[component, below=1.2cm of search] (ml) {Service ML};
+\node[component, below=1.0cm of user] (notif) {Service Notifications};
+\node[component, below=1.2cm of ml] (billing) {Service Facturation};
+
+% ==== SUPPORT SERVICES ====
+\node[support, left=1.4cm of notif] (config) {Service Config};
+\node[support, below=1.2cm of billing] (log) {Service Logs \& Traces};
+\node[support, left=1.4cm of config] (audit) {Service Audit\\Sécurité};
+
+% ==== INFRASTRUCTURE ====
+\node[infra, below=2cm of user] (db) {Base de Données};
+\node[infra, below=2cm of indexer] (index) {Moteur d'Index};
+\node[infra, below=1.5cm of crawler] (broker) {Message Broker};
+\node[infra, below=1.0cm of broker] (storage) {Stockage Fichiers};
+\node[infra, right=1.2cm of index] (monitor) {Monitoring};
+\node[infra, below=1.0cm of log] (orchestrator) {Kubernetes};
+\node[infra, below=1.0cm of orchestrator] (lb) {Load Balancer};
+
+% ==== CONNECTIONS ====
+% Client connections
+\draw[arrow] (web) -- (gateway);
+\draw[arrow] (mobile) -- (gateway);
+\draw[arrow] (api) -- (gateway);
+
+% Gateway connections
+\draw[arrow] (gateway) -- (auth);
+\draw[arrow] (gateway) -- (user);
+\draw[arrow] (gateway) -- (search);
+\draw[arrow] (gateway) -- (indexer);
+\draw[arrow] (gateway) -- (notif);
+\draw[arrow] (gateway) -- (billing);
+
+% Service to infrastructure connections
+\draw[arrow] (user) -- (db);
+\draw[arrow] (billing) -- (db);
+\draw[arrow] (notif) -- (broker);
+
+% Search and indexing
+\draw[arrow] (search) -- (index);
+\draw[arrow] (indexer) -- (index);
+\draw[arrow] (search) -- (ml);
+
+% Data pipeline
+\draw[arrow] (crawler) -- (broker);
+\draw[arrow] (broker) -- (indexer);
+\draw[arrow] (broker) -- (ml);
+\draw[arrow] (crawler) -- (storage);
+
+% Monitoring connections
+\draw[arrow] (gateway) -- (monitor);
+\draw[arrow] (search) -- (monitor);
+\draw[arrow] (user) -- (monitor);
+\draw[arrow] (indexer) -- (monitor);
+\draw[arrow] (crawler) -- (monitor);
+\draw[arrow] (ml) -- (monitor);
+\draw[arrow] (billing) -- (monitor);
+
+% Configuration connections
+\draw[arrow] (config) -- (user);
+\draw[arrow] (config) -- (search);
+\draw[arrow] (config) -- (ml);
+
+% Support services
+\draw[arrow] (log) -- (monitor);
+\draw[arrow] (audit) -- (log);
+
+% Infrastructure orchestration
+\draw[arrow] (orchestrator) -- (gateway);
+\draw[arrow] (lb) -- (orchestrator);
+
+\end{tikzpicture}
+\end{adjustbox}
+
+
+
+
+\end{document}

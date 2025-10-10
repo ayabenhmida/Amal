@@ -1,6 +1,6 @@
 # DeepSeek Architecture
 
-## Team 3IDL03
+## Team 3IDL02
 - **Eya Ben Hmida**
 - **Eya Belkadhie**
 - **Rihab Ben Amor Souissi**
@@ -81,6 +81,7 @@ A **Query Service** and a **BFF** expose optimized read APIs.
 
 ---
 
+
 ##  **When to Use**
 
 - High-throughput pipelines  
@@ -133,6 +134,10 @@ A **Query Service** and a **BFF** expose optimized read APIs.
 
 - **Source Code:** [View on GitHub](https://github.com/EyaGIT/Amal_2/blob/main/Microservice_parallele.tex)  
 - **Architecture Diagram (PDF):** [Download PDF](https://github.com/EyaGIT/Amal_2/blob/main/Microservice_parallele.pdf)
+**Partie4:** 
+## Team 3IDL02
+- **Eya Ben Hmida**
+- **Rihab Ben Amor Souissi**
 
 ---
  

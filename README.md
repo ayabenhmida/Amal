@@ -141,4 +141,83 @@ A **Query Service** and a **BFF** expose optimized read APIs.
 
 ---
  
-*Last Updated: October 2025*
+# Parallel Architecture Report — Maher
+
+## 🧩 Optimality of the Parallel Architecture
+
+Our parallel architecture is designed for **maximum performance** and **operational efficiency**, based on the following criteria: **throughput**, **latency**, **scalability**, **fault tolerance**, and **resource efficiency**.
+
+---
+
+### a) Parallelism and Distribution
+
+The system follows an **event-driven architecture** using **Kafka** with **parallel consumer groups**.  
+Each microservice processes independent tasks, enabling **concurrent and distributed execution** across nodes.
+
+---
+
+### b) Automatic Scalability
+
+**Kubernetes Horizontal Pod Autoscaler (HPA)** dynamically adjusts the number of pods based on:
+- Queue depth  
+- CPU/GPU utilization  
+- Average latency  
+
+✅ **Result:** automatic scaling under high load and reduced resource consumption during idle periods.
+
+---
+
+### c) Service Specialization
+
+Functional separation into **preprocessing**, **inference**, and **post-processing** stages using:
+- Dedicated **GPU pools**  
+- Specialized **worker pools**  
+
+This ensures **optimal resource allocation** and **task efficiency**.
+
+---
+
+### d) Resilience and Observability
+
+Implemented with **Service Mesh (Istio)** providing:
+- **Circuit breaking** for fault tolerance  
+- **Prometheus**, **Grafana**, and **Jaeger** for real-time monitoring, tracing, and continuous performance adjustment  
+
+---
+
+### e) Queue Stability
+
+Queue-based model with **auto-scaling mechanisms** that adjust according to queue depth, maintaining **stable latency** and **predictable processing times**.
+
+---
+
+### f) Conclusion
+
+This architecture leverages:
+- **Massive parallelism**
+- **Automatic scalability**
+- **Resource specialization**
+- **Resilience and monitoring**
+
+to achieve **maximum throughput** and **minimum latency** across all workloads.
+
+---
+
+## 🚀 Advantages of the Distributed System
+
+Migrating to a distributed system provides multiple benefits:
+
+- **Horizontal scalability:** workload distribution across multiple nodes  
+- **Increased throughput** and **reduced latency**  
+- **High availability** through replication and fault tolerance  
+- **Data consistency** and **system resilience**  
+- **Continuous deployment** and simplified maintenance  
+- **Dynamic adaptation** to fluctuating workloads  
+
+---
+
+### 🧠 Summary
+
+This design enables a **robust, adaptive, and high-performance** infrastructure ready for modern cloud-native applications.
+
+

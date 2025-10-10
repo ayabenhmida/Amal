@@ -141,7 +141,7 @@ A **Query Service** and a **BFF** expose optimized read APIs.
 
 ---
  
-# Parallel Architecture Report — Maher
+# Parallel Architecture Report 
 
 ## 🧩 Optimality of the Parallel Architecture
 

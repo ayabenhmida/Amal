@@ -137,6 +137,7 @@ A **Query Service** and a **BFF** expose optimized read APIs.
 **Partie4:** 
 ## Team 3IDL02
 - **Eya Ben Hmida**
+- **Eya Ben elkadhi**
 - **Rihab Ben Amor Souissi**
 
 ---
